@@ -1,0 +1,6 @@
+--修改日期：20121021
+--修改人：叶爱军
+--需求编号：XD-JD03-027 系统功能-增加借款单位
+--参数设置：
+ALTER TABLE CMS_LOAN_BILL ADD CLB_OPE_DATE DATETIME;
+GO
