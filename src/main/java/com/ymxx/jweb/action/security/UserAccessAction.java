@@ -20,7 +20,7 @@ public class UserAccessAction extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		resp.setContentType("text/plain");
+		resp.setContentType("application/json");
 		
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
