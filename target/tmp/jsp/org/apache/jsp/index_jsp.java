@@ -54,7 +54,7 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n");
       out.write("\t<link rel=\"stylesheet\" type=\"text/css\" href=\"");
       out.print(easyUIHome);
-      out.write("/themes/default/easyui.css\">\r\n");
+      out.write("/themes/black/easyui.css\">\r\n");
       out.write("\t<link rel=\"stylesheet\" type=\"text/css\" href=\"");
       out.print(easyUIHome);
       out.write("/themes/icon.css\">\r\n");
