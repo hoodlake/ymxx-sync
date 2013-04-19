@@ -1,0 +1,20 @@
+﻿1: @Transactional声明的方法执行时,Spring的TransactionManager会自动Open Sesion,自动开启事务,并且将此Sesion绑定到SpringSessionContext(实际上是TransactionSynchronizationManager的ThreadLocal的Map)中..
+
+2:SessionFactory.getCurrentSession()方法执行时,调用SpringSessionContext.currentSession()从TransactionSynchronizationManager的上下文中查找 当前的Session
+
+3:找到后返回当前的Session,找不到,则返回HibernateException("No Sessionfound for current thread")
+
+PS: 从中,我们也知道了,执行SessionFactoryImpl.openSession()时,只是简单地new 一个SessionBuilder,然后调用SessionBuilder.openSession(),得到的Session是不会绑定到任何 org.hibernate.context.spi.CurrentSessionContext 在上下文中的.
+
+
+总结: hibernate.current_session_context_class=thread(org.hibernate.context.internal.ThreadLocalSessionContext)
+
+与      hibernate.current_session_context_class=org.springframework.orm.hibernate4.SpringSessionContext 时的SessionFactory.getCurrentSession()的不同之处在于: 
+
+ 前者在ThreadLocalSessionContext里的线程局部的Map中查找Session,
+
+ 而后者在SpringSessionContext的上下文(TransactionSynchronizationManager里的线程局部的Map)中查找...
+
+
+      最终,你会发觉,无论是ThreadLocalSessionContext 或 SpringSessionContext 查找的"currentSession",都是以类似键值对<SessionFactory,Session>的形式存放到ThreadLocal的Map中,也就是说这两者的上下文都是一个ThreadLocal的Map...查找时以SessionFactory为键来查找对应的Session,所以在同一线程中,一个SessionFactory只能有一个currentSession
+http://www.linuxso.com/architecture/16758.html
